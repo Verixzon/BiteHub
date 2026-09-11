@@ -41,7 +41,7 @@ router.post('/initialize', protect, async (req, res) => {
       {
         email: user.email,
         amount: Math.round(order.totalAmount * 100),
-        callback_url: 'http://localhost:5173/payment/callback',
+        callback_url: 'https://bitehub-frontend-9cc5.onrender.com/payment/callback',
         metadata: {
           orderId: order._id.toString(),
         },
