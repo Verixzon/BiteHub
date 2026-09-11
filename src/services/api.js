@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000'
+const API_URL ='https://bitehub-emzx.onrender.com'
 
 const imageModules = import.meta.glob(
   '../assets/foods/*.{jpg,jpeg,png,webp}',

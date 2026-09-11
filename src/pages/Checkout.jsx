@@ -27,7 +27,7 @@ function Checkout() {
       const token = localStorage.getItem('bitehub-token')
 
       const orderResponse = await fetch(
-        'http://localhost:5000/api/orders',
+        'https://bitehub-emzx.onrender.com/api/orders',
         {
           method: 'POST',
           headers: {
@@ -56,7 +56,7 @@ function Checkout() {
       }
 
       const paymentResponse = await fetch(
-        'http://localhost:5000/api/payments/initialize',
+        'https://bitehub-emzx.onrender.com/api/payments/initialize',
         {
           method: 'POST',
           headers: {

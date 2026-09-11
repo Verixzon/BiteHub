@@ -26,7 +26,7 @@ function PaymentCallback() {
         const token = localStorage.getItem('bitehub-token')
 
         const response = await fetch(
-          `http://localhost:5000/api/payments/verify/${reference}`,
+          `https://bitehub-emzx.onrender.com/api/payments/verify/${reference}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

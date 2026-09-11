@@ -24,7 +24,7 @@ function FoodCard({ food, ...foodProps }) {
   async function loadReviews() {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/reviews/food/${item._id}`
+        `https://bitehub-emzx.onrender.com/api/reviews/food/${item._id}`
       )
 
       const data = await response.json()
@@ -57,7 +57,7 @@ function FoodCard({ food, ...foodProps }) {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/reviews/${reviewId}`,
+        `https://bitehub-emzx.onrender.com/api/reviews/${reviewId}`,
         {
           method: 'PATCH',
           headers: {
@@ -99,7 +99,7 @@ function FoodCard({ food, ...foodProps }) {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/reviews/${reviewId}`,
+        `https://bitehub-emzx.onrender.com/api/reviews/${reviewId}`,
         {
           method: 'DELETE',
           headers: {

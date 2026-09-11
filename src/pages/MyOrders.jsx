@@ -26,7 +26,7 @@ function MyOrders() {
         const token = localStorage.getItem('bitehub-token')
 
         const response = await fetch(
-          'http://localhost:5000/api/orders/my-orders',
+          'https://bitehub-emzx.onrender.com/api/orders/my-orders',
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -111,7 +111,7 @@ function MyOrders() {
       const token = localStorage.getItem('bitehub-token')
 
       const response = await fetch(
-        'http://localhost:5000/api/reviews',
+        'https://bitehub-emzx.onrender.com/api/reviews',
         {
           method: 'POST',
           headers: {
