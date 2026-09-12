@@ -164,9 +164,10 @@ function MyOrders() {
   if (loading) {
     return (
       <main className="orders-page">
-        <p className="orders-message">
-          Loading your orders...
-        </p>
+        <div className="loading-state">
+          <div className="loading-spinner"></div>
+          <p>Loading your orders...</p>
+        </div>
       </main>
     )
   }
@@ -330,6 +331,9 @@ function MyOrders() {
                                         star
                                       )
                                     }
+                                    disabled={
+                                      submittingReview[foodId]
+                                    }
                                   >
                                     ★
                                   </button>
@@ -348,6 +352,9 @@ function MyOrders() {
                                   foodId,
                                   event.target.value
                                 )
+                              }
+                              disabled={
+                                submittingReview[foodId]
                               }
                             />
 

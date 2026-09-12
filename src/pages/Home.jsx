@@ -11,6 +11,7 @@ import drinksImage from '../assets/foods/drinks.jpg'
 
 function Home() {
   const [foods, setFoods] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function loadFoods() {
@@ -19,6 +20,8 @@ function Home() {
         setFoods(data)
       } catch (error) {
         console.error('Unable to load foods:', error)
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -94,6 +97,39 @@ function Home() {
         </div>
       </section>
 
+      {/* About Section */}
+
+      <section className="about-section" id="about">
+        <div className="about-content">
+          <div className="section-heading">
+            <p>ABOUT US</p>
+            <h2>About BiteHub</h2>
+          </div>
+
+          <p>
+            BiteHub is a modern food ordering platform built to make
+            ordering your favourite meals simple and convenient.
+          </p>
+
+          <p>
+            From Nigerian favourites to fast foods, proteins, sides,
+            and refreshing drinks, BiteHub brings a variety of meals
+            together in one place.
+          </p>
+
+          <p>
+            Browse the menu, add your favourites to your cart, place
+            your order, and make secure online payments with ease.
+          </p>
+
+          <h3>Our Goal</h3>
+
+          <p>
+            To make food ordering faster, easier, and more enjoyable.
+          </p>
+        </div>
+      </section>
+
       {/* Categories */}
 
       <section className="categories-section">
@@ -113,129 +149,140 @@ function Home() {
         </div>
       </section>
 
-      {/* Nigerian Meals */}
+      {/* Loading State / Food Sections */}
 
-      <section className="food-section">
-        <div className="section-heading">
-          <p>OUR FAVOURITES</p>
-          <h2>Nigerian Meals</h2>
+      {loading ? (
+        <div className="loading-state">
+          <div className="loading-spinner"></div>
+          <p>Loading meals...</p>
         </div>
+      ) : (
+        <>
+          {/* Nigerian Meals */}
 
-        <div className="food-grid">
-          {popularFoods.map((food) => (
-            <FoodCard
-              key={food._id}
-              _id={food._id}
-              name={food.name}
-              category={food.category}
-              price={food.price}
-              image={food.image}
-            />
-          ))}
-        </div>
+          <section className="food-section">
+            <div className="section-heading">
+              <p>OUR FAVOURITES</p>
+              <h2>Nigerian Meals</h2>
+            </div>
 
-        <div className="view-menu-container">
-          <Link
-            to="/menu?category=Nigerian%20Meals"
-            className="view-menu-button"
-          >
-            Explore Nigerian Meals
-          </Link>
-        </div>
-      </section>
+            <div className="food-grid">
+              {popularFoods.map((food) => (
+                <FoodCard
+                  key={food._id}
+                  _id={food._id}
+                  name={food.name}
+                  category={food.category}
+                  price={food.price}
+                  image={food.image}
+                />
+              ))}
+            </div>
 
-      {/* Proteins & Sides */}
+            <div className="view-menu-container">
+              <Link
+                to="/menu?category=Nigerian%20Meals"
+                className="view-menu-button"
+              >
+                Explore Nigerian Meals
+              </Link>
+            </div>
+          </section>
 
-      <section className="food-section">
-        <div className="section-heading">
-          <p>ADD TO YOUR MEAL</p>
-          <h2>Proteins & Sides</h2>
-        </div>
+          {/* Proteins & Sides */}
 
-        <div className="food-grid">
-          {proteinsAndSides.map((food) => (
-            <FoodCard
-              key={food._id}
-              _id={food._id}
-              name={food.name}
-              category={food.category}
-              price={food.price}
-              image={food.image}
-            />
-          ))}
-        </div>
+          <section className="food-section">
+            <div className="section-heading">
+              <p>ADD TO YOUR MEAL</p>
+              <h2>Proteins & Sides</h2>
+            </div>
 
-        <div className="view-menu-container">
-          <Link
-            to="/menu?category=Proteins%20%26%20Sides"
-            className="view-menu-button"
-          >
-            Explore Proteins & Sides
-          </Link>
-        </div>
-      </section>
+            <div className="food-grid">
+              {proteinsAndSides.map((food) => (
+                <FoodCard
+                  key={food._id}
+                  _id={food._id}
+                  name={food.name}
+                  category={food.category}
+                  price={food.price}
+                  image={food.image}
+                />
+              ))}
+            </div>
 
-      {/* Fast Food */}
+            <div className="view-menu-container">
+              <Link
+                to="/menu?category=Proteins%20%26%20Sides"
+                className="view-menu-button"
+              >
+                Explore Proteins & Sides
+              </Link>
+            </div>
+          </section>
 
-      <section className="food-section">
-        <div className="section-heading">
-          <p>QUICK BITES</p>
-          <h2>Fast Food</h2>
-        </div>
+          {/* Fast Food */}
 
-        <div className="food-grid">
-          {fastFoods.map((food) => (
-            <FoodCard
-              key={food._id}
-              _id={food._id}
-              name={food.name}
-              category={food.category}
-              price={food.price}
-              image={food.image}
-            />
-          ))}
-        </div>
+          <section className="food-section">
+            <div className="section-heading">
+              <p>QUICK BITES</p>
+              <h2>Fast Food</h2>
+            </div>
 
-        <div className="view-menu-container">
-          <Link
-            to="/menu?category=Fast%20Food"
-            className="view-menu-button"
-          >
-            Explore Fast Food
-          </Link>
-        </div>
-      </section>
+            <div className="food-grid">
+              {fastFoods.map((food) => (
+                <FoodCard
+                  key={food._id}
+                  _id={food._id}
+                  name={food.name}
+                  category={food.category}
+                  price={food.price}
+                  image={food.image}
+                />
+              ))}
+            </div>
 
-      {/* Drinks */}
+            <div className="view-menu-container">
+              <Link
+                to="/menu?category=Fast%20Food"
+                className="view-menu-button"
+              >
+                Explore Fast Food
+              </Link>
+            </div>
+          </section>
 
-      <section className="food-section">
-        <div className="section-heading">
-          <p>STAY REFRESHED</p>
-          <h2>Drinks</h2>
-        </div>
+          {/* Drinks */}
 
-        <div className="food-grid">
-          {drinks.map((food) => (
-            <FoodCard
-              key={food._id}
-              _id={food._id}
-              name={food.name}
-              category={food.category}
-              price={food.price}
-              image={food.image}
-            />
-          ))}
-        </div>
+          <section className="food-section">
+            <div className="section-heading">
+              <p>STAY REFRESHED</p>
+              <h2>Drinks</h2>
+            </div>
 
-        <div className="view-menu-container">
-          <Link
-            to="/menu?category=Drinks"
-            className="view-menu-button"
-          >
-            Explore Drinks
-          </Link>
-        </div>
-      </section>
+            <div className="food-grid">
+              {drinks.map((food) => (
+                <FoodCard
+                  key={food._id}
+                  _id={food._id}
+                  name={food.name}
+                  category={food.category}
+                  price={food.price}
+                  image={food.image}
+                />
+              ))}
+            </div>
+
+            <div className="view-menu-container">
+              <Link
+                to="/menu?category=Drinks"
+                className="view-menu-button"
+              >
+                Explore Drinks
+              </Link>
+            </div>
+          </section>
+        </>
+      )}
 
     </main>
   )

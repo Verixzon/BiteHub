@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useCart } from '../services/CartContext.jsx'
 
 function Checkout() {
-  const { cartItems, clearCart } = useCart()
+  const { cartItems } = useCart()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -187,7 +187,7 @@ function Checkout() {
             }
           >
             {loading
-              ? 'Preparing Payment...'
+              ? 'Processing payment...'
               : 'Proceed to Payment'}
           </button>
         </div>

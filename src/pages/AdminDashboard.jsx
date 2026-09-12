@@ -21,6 +21,13 @@ function AdminDashboard() {
     image: '',
   })
 
+  const [savingFood, setSavingFood] = useState(false)
+  const [savingOrderStatus, setSavingOrderStatus] = useState({})
+  const [deletingFood, setDeletingFood] = useState({})
+  const [deletingReview, setDeletingReview] = useState({})
+  const [deletingUser, setDeletingUser] = useState({})
+  const [savingUserRole, setSavingUserRole] = useState({})
+
   useEffect(() => {
     loadDashboard()
   }, [])
@@ -120,6 +127,11 @@ function AdminDashboard() {
 
   async function updateStatus(orderId, status) {
     try {
+      setSavingOrderStatus((current) => ({
+        ...current,
+        [orderId]: true,
+      }))
+
       const token = localStorage.getItem('bitehub-token')
 
       const response = await fetch(
@@ -158,6 +170,11 @@ function AdminDashboard() {
       )
     } catch (error) {
       alert('Unable to connect to the server.')
+    } finally {
+      setSavingOrderStatus((current) => ({
+        ...current,
+        [orderId]: false,
+      }))
     }
   }
 
@@ -205,6 +222,8 @@ function AdminDashboard() {
     event.preventDefault()
 
     try {
+      setSavingFood(true)
+
       const token = localStorage.getItem('bitehub-token')
 
       const url = editingFood
@@ -255,6 +274,8 @@ function AdminDashboard() {
       closeFoodForm()
     } catch (error) {
       alert('Unable to connect to the server.')
+    } finally {
+      setSavingFood(false)
     }
   }
 
@@ -268,6 +289,11 @@ function AdminDashboard() {
     }
 
     try {
+      setDeletingFood((current) => ({
+        ...current,
+        [foodId]: true,
+      }))
+
       const token = localStorage.getItem('bitehub-token')
 
       const response = await fetch(
@@ -298,6 +324,11 @@ function AdminDashboard() {
       )
     } catch (error) {
       alert('Unable to connect to the server.')
+    } finally {
+      setDeletingFood((current) => ({
+        ...current,
+        [foodId]: false,
+      }))
     }
   }
 
@@ -311,6 +342,11 @@ function AdminDashboard() {
     }
 
     try {
+      setDeletingReview((current) => ({
+        ...current,
+        [reviewId]: true,
+      }))
+
       const token = localStorage.getItem('bitehub-token')
 
       const response = await fetch(
@@ -341,6 +377,11 @@ function AdminDashboard() {
       )
     } catch (error) {
       alert('Unable to connect to the server.')
+    } finally {
+      setDeletingReview((current) => ({
+        ...current,
+        [reviewId]: false,
+      }))
     }
   }
 
@@ -354,6 +395,11 @@ function AdminDashboard() {
     }
 
     try {
+      setDeletingUser((current) => ({
+        ...current,
+        [userId]: true,
+      }))
+
       const token = localStorage.getItem('bitehub-token')
 
       const response = await fetch(
@@ -383,11 +429,21 @@ function AdminDashboard() {
       )
     } catch (error) {
       alert('Unable to connect to the server.')
+    } finally {
+      setDeletingUser((current) => ({
+        ...current,
+        [userId]: false,
+      }))
     }
   }
 
   async function updateUserRole(userId, role) {
     try {
+      setSavingUserRole((current) => ({
+        ...current,
+        [userId]: true,
+      }))
+
       const token = localStorage.getItem('bitehub-token')
 
       const response = await fetch(
@@ -426,6 +482,11 @@ function AdminDashboard() {
     } catch (error) {
       console.error(error)
       alert('Unable to connect to the server.')
+    } finally {
+      setSavingUserRole((current) => ({
+        ...current,
+        [userId]: false,
+      }))
     }
   }
 
@@ -452,7 +513,10 @@ function AdminDashboard() {
   if (loading) {
     return (
       <main className="admin-page">
-        <p>Loading admin dashboard...</p>
+        <div className="loading-state">
+          <div className="loading-spinner"></div>
+          <p>Loading admin dashboard...</p>
+        </div>
       </main>
     )
   }
@@ -672,6 +736,9 @@ function AdminDashboard() {
                       event.target.value
                     )
                   }
+                  disabled={
+                    savingOrderStatus[order._id]
+                  }
                 >
                   <option value="pending">
                     Pending
@@ -697,6 +764,10 @@ function AdminDashboard() {
                     Cancelled
                   </option>
                 </select>
+
+                {savingOrderStatus[order._id] && (
+                  <span>Saving...</span>
+                )}
               </div>
             </article>
           ))
@@ -718,6 +789,7 @@ function AdminDashboard() {
           <button
             type="button"
             onClick={openAddFoodForm}
+            disabled={savingFood}
           >
             + Add Food
           </button>
@@ -741,6 +813,7 @@ function AdminDashboard() {
               value={foodForm.name}
               onChange={handleFoodChange}
               required
+              disabled={savingFood}
             />
 
             <input
@@ -750,6 +823,7 @@ function AdminDashboard() {
               value={foodForm.category}
               onChange={handleFoodChange}
               required
+              disabled={savingFood}
             />
 
             <input
@@ -760,6 +834,7 @@ function AdminDashboard() {
               onChange={handleFoodChange}
               min="0"
               required
+              disabled={savingFood}
             />
 
             <input
@@ -768,18 +843,25 @@ function AdminDashboard() {
               placeholder="Image filename e.g. jollof-rice.jpg"
               value={foodForm.image}
               onChange={handleFoodChange}
+              disabled={savingFood}
             />
 
             <div className="admin-food-form-actions">
-              <button type="submit">
-                {editingFood
-                  ? 'Update Food'
-                  : 'Add Food'}
+              <button
+                type="submit"
+                disabled={savingFood}
+              >
+                {savingFood
+                  ? 'Saving...'
+                  : editingFood
+                    ? 'Update Food'
+                    : 'Add Food'}
               </button>
 
               <button
                 type="button"
                 onClick={closeFoodForm}
+                disabled={savingFood}
               >
                 Cancel
               </button>
@@ -809,6 +891,9 @@ function AdminDashboard() {
                   onClick={() =>
                     openEditFoodForm(food)
                   }
+                  disabled={
+                    deletingFood[food._id]
+                  }
                 >
                   Edit
                 </button>
@@ -818,8 +903,13 @@ function AdminDashboard() {
                   onClick={() =>
                     deleteFood(food._id)
                   }
+                  disabled={
+                    deletingFood[food._id]
+                  }
                 >
-                  Delete
+                  {deletingFood[food._id]
+                    ? 'Deleting...'
+                    : 'Delete'}
                 </button>
               </div>
             </article>
@@ -900,8 +990,13 @@ function AdminDashboard() {
                     onClick={() =>
                       deleteReview(review._id)
                     }
+                    disabled={
+                      deletingReview[review._id]
+                    }
                   >
-                    Delete Review
+                    {deletingReview[review._id]
+                      ? 'Deleting...'
+                      : 'Delete Review'}
                   </button>
                 </div>
               </article>
@@ -959,6 +1054,10 @@ function AdminDashboard() {
                           event.target.value
                         )
                       }
+                      disabled={
+                        savingUserRole[user._id] ||
+                        deletingUser[user._id]
+                      }
                     >
                       <option value="user">
                         User
@@ -968,6 +1067,10 @@ function AdminDashboard() {
                         Admin
                       </option>
                     </select>
+
+                    {savingUserRole[user._id] && (
+                      <span>Saving...</span>
+                    )}
                   </div>
                 </div>
 
@@ -977,8 +1080,14 @@ function AdminDashboard() {
                     onClick={() =>
                       deleteUser(user._id)
                     }
+                    disabled={
+                      deletingUser[user._id] ||
+                      savingUserRole[user._id]
+                    }
                   >
-                    Delete User
+                    {deletingUser[user._id]
+                      ? 'Deleting...'
+                      : 'Delete User'}
                   </button>
                 </div>
               </article>

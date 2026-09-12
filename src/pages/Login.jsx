@@ -95,6 +95,7 @@ function Login() {
               onChange={handleChange}
               placeholder="Enter your email"
               required
+              disabled={loading}
             />
           </label>
 
@@ -109,6 +110,7 @@ function Login() {
                 onChange={handleChange}
                 placeholder="Enter your password"
                 required
+                disabled={loading}
               />
 
               <button
@@ -117,6 +119,7 @@ function Login() {
                 onClick={() =>
                   setShowPassword(!showPassword)
                 }
+                disabled={loading}
               >
                 {showPassword ? 'Hide' : 'Show'}
               </button>
@@ -130,6 +133,7 @@ function Login() {
                 name="remember"
                 checked={formData.remember}
                 onChange={handleChange}
+                disabled={loading}
               />
 
               <span>Remember me</span>

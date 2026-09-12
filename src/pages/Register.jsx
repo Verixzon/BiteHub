@@ -36,9 +36,9 @@ function Register() {
       return
     }
 
-    try {
-      setLoading(true)
+    setLoading(true)
 
+    try {
       const response = await fetch(
         'https://bitehub-emzx.onrender.com/api/auth/register',
         {
@@ -102,6 +102,7 @@ function Register() {
               onChange={handleChange}
               placeholder="Enter your full name"
               required
+              disabled={loading}
             />
           </label>
 
@@ -115,6 +116,7 @@ function Register() {
               onChange={handleChange}
               placeholder="Enter your email"
               required
+              disabled={loading}
             />
           </label>
 
@@ -128,6 +130,7 @@ function Register() {
               onChange={handleChange}
               placeholder="08012345678"
               required
+              disabled={loading}
             />
           </label>
 
@@ -142,6 +145,7 @@ function Register() {
                 onChange={handleChange}
                 placeholder="Create a password"
                 required
+                disabled={loading}
               />
 
               <button
@@ -150,6 +154,7 @@ function Register() {
                 onClick={() =>
                   setShowPassword(!showPassword)
                 }
+                disabled={loading}
               >
                 {showPassword ? 'Hide' : 'Show'}
               </button>
@@ -171,6 +176,7 @@ function Register() {
                 onChange={handleChange}
                 placeholder="Confirm your password"
                 required
+                disabled={loading}
               />
 
               <button
@@ -181,6 +187,7 @@ function Register() {
                     !showConfirmPassword
                   )
                 }
+                disabled={loading}
               >
                 {showConfirmPassword ? 'Hide' : 'Show'}
               </button>

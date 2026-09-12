@@ -8,9 +8,10 @@ function PaymentCallback() {
   const { clearCart } = useCart()
 
   const [message, setMessage] = useState(
-    'Verifying your payment...'
+    'Verifying payment...'
   )
   const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function verifyPayment() {
@@ -19,6 +20,7 @@ function PaymentCallback() {
 
         if (!reference) {
           setError(true)
+          setLoading(false)
           setMessage('Payment reference was not found.')
           return
         }
@@ -38,6 +40,7 @@ function PaymentCallback() {
 
         if (!response.ok) {
           setError(true)
+          setLoading(false)
           setMessage(
             data.message || 'Payment verification failed.'
           )
@@ -47,6 +50,8 @@ function PaymentCallback() {
         clearCart()
 
         localStorage.removeItem('bitehub-pending-order')
+
+        setLoading(false)
 
         setMessage(
           'Payment successful! Redirecting to your orders...'
@@ -59,6 +64,7 @@ function PaymentCallback() {
         console.error(error)
 
         setError(true)
+        setLoading(false)
         setMessage(
           'Unable to verify your payment. Please try again.'
         )
@@ -93,7 +99,7 @@ function PaymentCallback() {
           {message}
         </p>
 
-        {!error && (
+        {loading && (
           <div className="payment-callback-loader">
             <span></span>
             <span></span>

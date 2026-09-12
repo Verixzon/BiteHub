@@ -84,9 +84,10 @@ function Menu() {
       </section>
 
       {loading ? (
-        <p className="menu-message">
-          Loading menu...
-        </p>
+  <div className="loading-state">
+    <div className="loading-spinner"></div>
+    <p>Loading menu...</p>
+  </div>
       ) : error ? (
         <p className="menu-message menu-error">
           {error}
