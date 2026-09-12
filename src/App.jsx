@@ -11,6 +11,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import MyOrders from './pages/MyOrders'
 import PaymentCallback from './pages/PaymentCallback'
+import Footer from './components/Footer'
 
 import './App.css'
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/menu" element={<Menu />} />
 
         <Route path="/cart" element={<Cart />} />
+        
 
         <Route
   path="/admin"
@@ -65,7 +67,10 @@ function App() {
         <Route path="/login" element={<Login />} />
 
         <Route path="/register" element={<Register />} />
+        
       </Routes>
+
+      <Footer />
     </BrowserRouter>
   )
 }
